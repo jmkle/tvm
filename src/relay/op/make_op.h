@@ -48,9 +48,10 @@ Expr MakeConcatenate(Expr data, int axis);
 Expr MakeMatmul(Expr tensor_a, Expr tensor_b, IndexExpr units, DataType out_dtype, bool transpose_a,
                 bool transpose_b);
 
-Expr MakeDense(Expr data, Expr weight, IndexExpr units, DataType out_dtype);
+Expr MakeDense(Expr data, Expr weight, IndexExpr units, DataType out_dtype, String config_update);
 
-Expr MakeBatchMatmul(Expr lhs, Expr rhs, DataType out_dtype, bool transpose_a, bool transpose_b);
+Expr MakeBatchMatmul(Expr lhs, Expr rhs, DataType out_dtype, bool transpose_a, bool transpose_b,
+                     String config_update);
 
 Expr MakeExpandDims(Expr data, int axis, int num_newaxis);
 

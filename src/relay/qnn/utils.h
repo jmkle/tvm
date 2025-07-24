@@ -294,7 +294,7 @@ Expr MakeQnnConv2D(Expr data, Expr weight, Expr input_zero_point, Expr kernel_ze
                    Expr input_scale, Expr kernel_scale, Array<IndexExpr> strides,
                    Array<IndexExpr> padding, Array<IndexExpr> dilation, int groups,
                    IndexExpr channels, Array<IndexExpr> kernel_size, String data_layout,
-                   String kernel_layout, String out_layout, DataType out_dtype);
+                   String kernel_layout, String out_layout, DataType out_dtype, String config_update);
 
 }  // namespace qnn
 }  // namespace relay

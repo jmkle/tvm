@@ -107,11 +107,11 @@ def conv1d(
         The computed result.
     """
     if isinstance(kernel_size, int):
-        kernel_size = (kernel_size,)
+        kernel_size = (kernel_size, )
     if isinstance(strides, int):
-        strides = (strides,)
+        strides = (strides, )
     if isinstance(dilation, int):
-        dilation = (dilation,)
+        dilation = (dilation, )
     padding = get_pad_tuple1d(padding)
     return _make.conv1d(
         data,
@@ -142,6 +142,7 @@ def conv2d(
     kernel_layout="OIHW",
     out_layout="",
     out_dtype="",
+    config_update="",
 ):
     r"""2D convolution.
 
@@ -233,6 +234,7 @@ def conv2d(
         kernel_layout,
         out_layout,
         out_dtype,
+        config_update,
     )
 
 
@@ -427,19 +429,19 @@ def contrib_conv3d_winograd_without_weight_transform(
 
 
 def conv3d_transpose(
-    data,
-    weight,
-    strides=(1, 1, 1),
-    padding=(0, 0, 0),
-    dilation=(1, 1, 1),
-    groups=1,
-    channels=None,
-    kernel_size=None,
-    data_layout="NCDHW",
-    kernel_layout="IODHW",
-    out_layout="",
-    output_padding=(0, 0, 0),
-    out_dtype="",
+        data,
+        weight,
+        strides=(1, 1, 1),
+        padding=(0, 0, 0),
+        dilation=(1, 1, 1),
+        groups=1,
+        channels=None,
+        kernel_size=None,
+        data_layout="NCDHW",
+        kernel_layout="IODHW",
+        out_layout="",
+        output_padding=(0, 0, 0),
+        out_dtype="",
 ):
     r"""3D transpose convolution.
 
@@ -513,19 +515,19 @@ def conv3d_transpose(
 
 
 def conv2d_transpose(
-    data,
-    weight,
-    strides=(1, 1),
-    padding=(0, 0),
-    dilation=(1, 1),
-    groups=1,
-    channels=None,
-    kernel_size=None,
-    data_layout="NCHW",
-    kernel_layout="IOHW",
-    out_layout="",
-    output_padding=(0, 0),
-    out_dtype="",
+        data,
+        weight,
+        strides=(1, 1),
+        padding=(0, 0),
+        dilation=(1, 1),
+        groups=1,
+        channels=None,
+        kernel_size=None,
+        data_layout="NCHW",
+        kernel_layout="IOHW",
+        out_layout="",
+        output_padding=(0, 0),
+        out_dtype="",
 ):
     """Two dimensional transposed convolution operator.
 
@@ -595,19 +597,19 @@ def conv2d_transpose(
 
 
 def conv1d_transpose(
-    data,
-    weight,
-    strides=(1,),
-    padding=(0,),
-    dilation=(1,),
-    groups=1,
-    channels=None,
-    kernel_size=None,
-    data_layout="NCW",
-    kernel_layout="IOW",
-    out_layout="",
-    output_padding=(0,),
-    out_dtype="",
+        data,
+        weight,
+        strides=(1, ),
+        padding=(0, ),
+        dilation=(1, ),
+        groups=1,
+        channels=None,
+        kernel_size=None,
+        data_layout="NCW",
+        kernel_layout="IOW",
+        out_layout="",
+        output_padding=(0, ),
+        out_dtype="",
 ):
     """One dimensional transposed convolution operator.
 
@@ -748,14 +750,14 @@ def log_softmax(data, axis=-1):
 
 
 def max_pool1d(
-    data,
-    pool_size=(1,),
-    strides=(1,),
-    dilation=(1,),
-    padding=(0,),
-    layout="NCW",
-    out_layout="",
-    ceil_mode=False,
+        data,
+        pool_size=(1, ),
+        strides=(1, ),
+        dilation=(1, ),
+        padding=(0, ),
+        layout="NCW",
+        out_layout="",
+        ceil_mode=False,
 ):
     r"""1D maximum pooling operator.
 
@@ -802,26 +804,25 @@ def max_pool1d(
         The computed result.
     """
     if isinstance(pool_size, int):
-        pool_size = (pool_size,)
+        pool_size = (pool_size, )
     if isinstance(strides, int):
-        strides = (strides,)
+        strides = (strides, )
     if isinstance(dilation, int):
-        dilation = (dilation,)
+        dilation = (dilation, )
     padding = get_pad_tuple1d(padding)
-    return _make.max_pool1d(
-        data, pool_size, strides, dilation, padding, layout, out_layout, ceil_mode
-    )
+    return _make.max_pool1d(data, pool_size, strides, dilation, padding, layout, out_layout,
+                            ceil_mode)
 
 
 def max_pool2d(
-    data,
-    pool_size=(1, 1),
-    strides=(1, 1),
-    dilation=(1, 1),
-    padding=(0, 0),
-    layout="NCHW",
-    out_layout="",
-    ceil_mode=False,
+        data,
+        pool_size=(1, 1),
+        strides=(1, 1),
+        dilation=(1, 1),
+        padding=(0, 0),
+        layout="NCHW",
+        out_layout="",
+        ceil_mode=False,
 ):
     r"""2D maximum pooling operator.
 
@@ -882,20 +883,19 @@ def max_pool2d(
     if isinstance(dilation, int):
         dilation = (dilation, dilation)
     padding = get_pad_tuple2d(padding)
-    return _make.max_pool2d(
-        data, pool_size, strides, dilation, padding, layout, out_layout, ceil_mode
-    )
+    return _make.max_pool2d(data, pool_size, strides, dilation, padding, layout, out_layout,
+                            ceil_mode)
 
 
 def max_pool3d(
-    data,
-    pool_size=(1, 1, 1),
-    strides=(1, 1, 1),
-    dilation=(1, 1, 1),
-    padding=(0, 0, 0),
-    layout="NCDHW",
-    out_layout="",
-    ceil_mode=False,
+        data,
+        pool_size=(1, 1, 1),
+        strides=(1, 1, 1),
+        dilation=(1, 1, 1),
+        padding=(0, 0, 0),
+        layout="NCDHW",
+        out_layout="",
+        ceil_mode=False,
 ):
     r"""3D maximum pooling operator.
 
@@ -949,21 +949,20 @@ def max_pool3d(
     if isinstance(dilation, int):
         dilation = (dilation, dilation, dilation)
     padding = get_pad_tuple3d(padding)
-    return _make.max_pool3d(
-        data, pool_size, strides, dilation, padding, layout, out_layout, ceil_mode
-    )
+    return _make.max_pool3d(data, pool_size, strides, dilation, padding, layout, out_layout,
+                            ceil_mode)
 
 
 def avg_pool1d(
-    data,
-    pool_size=(1,),
-    strides=(1,),
-    dilation=(1,),
-    padding=(0,),
-    layout="NCW",
-    out_layout="",
-    ceil_mode=False,
-    count_include_pad=False,
+        data,
+        pool_size=(1, ),
+        strides=(1, ),
+        dilation=(1, ),
+        padding=(0, ),
+        layout="NCW",
+        out_layout="",
+        ceil_mode=False,
+        count_include_pad=False,
 ):
     r"""1D average pooling operator.
 
@@ -1013,11 +1012,11 @@ def avg_pool1d(
         The computed result.
     """
     if isinstance(pool_size, int):
-        pool_size = (pool_size,)
+        pool_size = (pool_size, )
     if isinstance(strides, int):
-        strides = (strides,)
+        strides = (strides, )
     if isinstance(dilation, int):
-        dilation = (dilation,)
+        dilation = (dilation, )
     padding = get_pad_tuple1d(padding)
     return _make.avg_pool1d(
         data,
@@ -1033,15 +1032,15 @@ def avg_pool1d(
 
 
 def avg_pool2d(
-    data,
-    pool_size=(1, 1),
-    strides=(1, 1),
-    dilation=(1, 1),
-    padding=(0, 0),
-    layout="NCHW",
-    out_layout="",
-    ceil_mode=False,
-    count_include_pad=False,
+        data,
+        pool_size=(1, 1),
+        strides=(1, 1),
+        dilation=(1, 1),
+        padding=(0, 0),
+        layout="NCHW",
+        out_layout="",
+        ceil_mode=False,
+        count_include_pad=False,
 ):
     r"""2D average pooling operator.
 
@@ -1120,15 +1119,15 @@ def avg_pool2d(
 
 
 def avg_pool3d(
-    data,
-    pool_size=(1, 1, 1),
-    strides=(1, 1, 1),
-    dilation=(1, 1, 1),
-    padding=(0, 0, 0),
-    layout="NCDHW",
-    out_layout="",
-    ceil_mode=False,
-    count_include_pad=False,
+        data,
+        pool_size=(1, 1, 1),
+        strides=(1, 1, 1),
+        dilation=(1, 1, 1),
+        padding=(0, 0, 0),
+        layout="NCDHW",
+        out_layout="",
+        ceil_mode=False,
+        count_include_pad=False,
 ):
     r"""3D average pooling operator.
 
@@ -1199,14 +1198,14 @@ def avg_pool3d(
 
 
 def max_pool2d_grad(
-    out_grad,
-    data,
-    pool_size=(1, 1),
-    strides=(1, 1),
-    padding=(0, 0),
-    layout="NCHW",
-    out_layout="",
-    ceil_mode=False,
+        out_grad,
+        data,
+        pool_size=(1, 1),
+        strides=(1, 1),
+        padding=(0, 0),
+        layout="NCHW",
+        out_layout="",
+        ceil_mode=False,
 ):
     r"""Gradient of 2D maximum pooling operator.
 
@@ -1243,21 +1242,20 @@ def max_pool2d_grad(
     result : tvm.relay.Expr
         The computed result.
     """
-    return _make.max_pool2d_grad(
-        out_grad, data, pool_size, strides, padding, layout, out_layout, ceil_mode
-    )
+    return _make.max_pool2d_grad(out_grad, data, pool_size, strides, padding, layout, out_layout,
+                                 ceil_mode)
 
 
 def avg_pool2d_grad(
-    out_grad,
-    data,
-    pool_size=(1, 1),
-    strides=(1, 1),
-    padding=(0, 0),
-    layout="NCHW",
-    out_layout="",
-    ceil_mode=False,
-    count_include_pad=False,
+        out_grad,
+        data,
+        pool_size=(1, 1),
+        strides=(1, 1),
+        padding=(0, 0),
+        layout="NCHW",
+        out_layout="",
+        ceil_mode=False,
+        count_include_pad=False,
 ):
     r"""Gradient of 2D average pooling operator.
 
@@ -1384,9 +1382,12 @@ def global_avg_pool2d(data, layout="NCHW", out_layout=""):
     return _make.global_avg_pool2d(data, layout, out_layout)
 
 
-def upsampling(
-    data, scale_h=1, scale_w=1, layout="NCHW", method="nearest_neighbor", align_corners=False
-):
+def upsampling(data,
+               scale_h=1,
+               scale_w=1,
+               layout="NCHW",
+               method="nearest_neighbor",
+               align_corners=False):
     """Upsampling.
 
     This operator takes data as input and does 2D scaling to the given scale factor.
@@ -1498,12 +1499,10 @@ def upsampling3d(
             scale_h = const(scale_h, "float64")
         if not isinstance(scale_w, Expr):
             scale_w = const(scale_w, "float64")
-        return _dyn_make.upsampling3d(
-            data, scale_d, scale_h, scale_w, layout, method, coordinate_transformation_mode
-        )
-    return _make.upsampling3d(
-        data, scale_d, scale_h, scale_w, layout, method, coordinate_transformation_mode
-    )
+        return _dyn_make.upsampling3d(data, scale_d, scale_h, scale_w, layout, method,
+                                      coordinate_transformation_mode)
+    return _make.upsampling3d(data, scale_d, scale_h, scale_w, layout, method,
+                              coordinate_transformation_mode)
 
 
 def batch_flatten(data):
@@ -1599,7 +1598,7 @@ def matmul(tensor_a, tensor_b, units=None, out_dtype="", transpose_a=False, tran
     return _make.matmul(tensor_a, tensor_b, units, out_dtype, transpose_a, transpose_b)
 
 
-def dense(data, weight, units=None, out_dtype=""):
+def dense(data, weight, units=None, out_dtype="", config_update=""):
     """Dense operator.
     Applies a linear transformation
 
@@ -1629,7 +1628,7 @@ def dense(data, weight, units=None, out_dtype=""):
     result : tvm.relay.Expr
         The computed result.
     """
-    return _make.dense(data, weight, units, out_dtype)
+    return _make.dense(data, weight, units, out_dtype, config_update)
 
 
 def contrib_dense_pack(data, weight, weight_layout="NC", units=None, out_dtype=""):
@@ -1960,9 +1959,15 @@ def dropout_raw(data, rate=0.5):
     return _make.dropout(data, rate)
 
 
-def batch_norm(
-    data, gamma, beta, moving_mean, moving_var, axis=1, epsilon=1e-5, center=True, scale=True
-):
+def batch_norm(data,
+               gamma,
+               beta,
+               moving_mean,
+               moving_var,
+               axis=1,
+               epsilon=1e-5,
+               center=True,
+               scale=True):
     r"""
     Batch normalization layer (Ioffe and Szegedy, 2014).
     Normalizes the input at each batch, i.e. applies a transformation
@@ -2042,9 +2047,8 @@ def batch_norm(
         new running mean (k-length vector),
         and new running variance (k-length vector)
     """
-    result = _make.batch_norm(
-        data, gamma, beta, moving_mean, moving_var, axis, epsilon, center, scale
-    )
+    result = _make.batch_norm(data, gamma, beta, moving_mean, moving_var, axis, epsilon, center,
+                              scale)
     return expr.TupleWrapper(result, 3)
 
 
@@ -2223,7 +2227,12 @@ def group_norm(data, gamma, beta, num_groups, axis=1, epsilon=1e-5, center=True,
     return _make.group_norm(data, gamma, beta, num_groups, axis, epsilon, center, scale)
 
 
-def batch_matmul(tensor_a, tensor_b, out_dtype="", transpose_a=False, transpose_b=True):
+def batch_matmul(tensor_a,
+                 tensor_b,
+                 out_dtype="",
+                 transpose_a=False,
+                 transpose_b=True,
+                 config_update=""):
     r"""
     Compute batch matrix multiplication of `tensor_a` and `tensor_b`.
 
@@ -2256,7 +2265,8 @@ def batch_matmul(tensor_a, tensor_b, out_dtype="", transpose_a=False, transpose_
     result: tvm.relay.Expr
         The computed result.
     """
-    return _make.batch_matmul(tensor_a, tensor_b, out_dtype, transpose_a, transpose_b)
+    return _make.batch_matmul(tensor_a, tensor_b, out_dtype, transpose_a, transpose_b,
+                              config_update)
 
 
 # pylint: disable=no-else-return,inconsistent-return-statements
@@ -2304,13 +2314,11 @@ def sparse_dense(dense_mat, sparse_mat, sparse_lhs=False):
         The computed result.
     """
     if hasattr(sparse_mat, "indices"):
-        return _make.sparse_dense(
-            dense_mat, sparse_mat.data, sparse_mat.indices, sparse_mat.indptr, sparse_lhs
-        )
+        return _make.sparse_dense(dense_mat, sparse_mat.data, sparse_mat.indices, sparse_mat.indptr,
+                                  sparse_lhs)
     else:
-        return _make.sparse_dense(
-            dense_mat, sparse_mat[0], sparse_mat[1], sparse_mat[2], sparse_lhs
-        )
+        return _make.sparse_dense(dense_mat, sparse_mat[0], sparse_mat[1], sparse_mat[2],
+                                  sparse_lhs)
 
 
 def sparse_transpose(x):
@@ -2805,9 +2813,8 @@ def contrib_conv2d_winograd_nnpack_weight_transform(weight, convolution_algorith
     result : tvm.relay.Expr
         The computed result.
     """
-    return _make.contrib_conv2d_winograd_nnpack_weight_transform(
-        weight, convolution_algorithm, out_dtype
-    )
+    return _make.contrib_conv2d_winograd_nnpack_weight_transform(weight, convolution_algorithm,
+                                                                 out_dtype)
 
 
 def deformable_conv2d(
@@ -3069,9 +3076,8 @@ def bitserial_dense(
     result : tvm.relay.Expr
         The computed result.
     """
-    return _make.bitserial_dense(
-        data, weight, units, data_bits, weight_bits, pack_dtype, out_dtype, unipolar
-    )
+    return _make.bitserial_dense(data, weight, units, data_bits, weight_bits, pack_dtype, out_dtype,
+                                 unipolar)
 
 
 def cross_entropy(predictions, targets):
@@ -3626,9 +3632,8 @@ def global_avg_pool3d(data, layout="NCDHW", out_layout=""):
     return _make.adaptive_avg_pool3d(data, output_size, layout, out_layout)
 
 
-def correlation(
-    data1, data2, kernel_size, max_displacement, stride1, stride2, padding, is_multiply, layout
-):
+def correlation(data1, data2, kernel_size, max_displacement, stride1, stride2, padding, is_multiply,
+                layout):
     r"""Applies correlation to inputs.
 
     The correlation layer performs multiplicative patch comparisons between two feature maps.
@@ -3706,9 +3711,8 @@ def correlation(
     """
     if isinstance(padding, int):
         padding = (padding, padding)
-    return _make.correlation(
-        data1, data2, kernel_size, max_displacement, stride1, stride2, padding, is_multiply, layout
-    )
+    return _make.correlation(data1, data2, kernel_size, max_displacement, stride1, stride2, padding,
+                             is_multiply, layout)
 
 
 def space_to_batch_nd(data, block_shape, paddings, pad_value=0):

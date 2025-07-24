@@ -96,10 +96,11 @@ InferCorrectLayoutOutput QnnDenseInferCorrectLayout(const Attrs& attrs,
 
 // Positional relay function to create quantized dense operator used by frontend FFI.
 Expr MakeQuantizedDense(Expr data, Expr weight, Expr input_zero_point, Expr kernel_zero_point,
-                        Expr input_scale, Expr kernel_scale, IndexExpr units, DataType out_dtype) {
+                        Expr input_scale, Expr kernel_scale, IndexExpr units, DataType out_dtype, String config_update) {
   auto attrs = make_object<DenseAttrs>();
   attrs->units = std::move(units);
   attrs->out_dtype = out_dtype;
+  attrs->config_update = std::move(config_update);
   static const Op& op = Op::Get("qnn.dense");
   return Call(op, {data, weight, input_zero_point, kernel_zero_point, input_scale, kernel_scale},
               Attrs(attrs), {});
@@ -107,7 +108,7 @@ Expr MakeQuantizedDense(Expr data, Expr weight, Expr input_zero_point, Expr kern
 
 Expr DenseFirstTerm(const Expr& quantized_data, const Expr& quantized_kernel,
                     const DenseAttrs* attrs) {
-  return Dense(quantized_data, quantized_kernel, attrs->units, attrs->out_dtype);
+  return Dense(quantized_data, quantized_kernel, attrs->units, attrs->out_dtype, attrs->config_update);
 }
 
 Expr DenseSecondTerm(const Expr& quantized_data, const Expr& kernel_zero_point,

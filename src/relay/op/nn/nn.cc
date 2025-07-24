@@ -203,10 +203,11 @@ RELAY_REGISTER_OP("nn.matmul")
 TVM_REGISTER_NODE_TYPE(DenseAttrs);
 
 // Positional relay function to create dense operator used by frontend FFI.
-Expr MakeDense(Expr data, Expr weight, IndexExpr units, DataType out_dtype) {
+Expr MakeDense(Expr data, Expr weight, IndexExpr units, DataType out_dtype, String config_update) {
   auto attrs = make_object<DenseAttrs>();
   attrs->units = units;
   attrs->out_dtype = out_dtype;
+  attrs->config_update = std::move(config_update);
   static const Op& op = Op::Get("nn.dense");
   return Call(op, {data, weight}, Attrs(attrs), {});
 }
@@ -1100,11 +1101,12 @@ TVM_REGISTER_NODE_TYPE(BatchMatmulAttrs);
 
 // Positional relay function to create batch_matmul operator used by frontend FFI.
 Expr MakeBatchMatmul(Expr tensor_a, Expr tensor_b, DataType out_dtype, bool transpose_a,
-                     bool transpose_b) {
+                     bool transpose_b, String config_update) {
   auto attrs = make_object<BatchMatmulAttrs>();
   attrs->out_dtype = out_dtype;
   attrs->transpose_a = transpose_a;
   attrs->transpose_b = transpose_b;
+  attrs->config_update = std::move(config_update);
   static const Op& op = Op::Get("nn.batch_matmul");
   return Call(op, {tensor_a, tensor_b}, Attrs(attrs), {});
 }

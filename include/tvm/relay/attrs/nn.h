@@ -127,6 +127,7 @@ struct Conv2DAttrs : public tvm::AttrsNode<Conv2DAttrs> {
   tvm::String auto_scheduler_rewritten_layout;   // The layout after auto-scheduler's layout rewrite
   Array<PrimExpr> meta_schedule_original_shape;  // The original shape of the weights
   DataType out_dtype;
+  tvm::String config_update; // The config update information for the CIM Accelerator
 
   TVM_DECLARE_ATTRS(Conv2DAttrs, "relay.attrs.Conv2DAttrs") {
     TVM_ATTR_FIELD(strides)
@@ -181,6 +182,14 @@ struct Conv2DAttrs : public tvm::AttrsNode<Conv2DAttrs> {
     TVM_ATTR_FIELD(out_dtype)
         .set_default(NullValue<DataType>())
         .describe("Output data type, set to explicit type under mixed precision setting");
+
+    TVM_ATTR_FIELD(config_update)
+        .set_default("")
+        .describe("The config update information for the CIM Accelerator. Used to pass the "
+                  "layer information to the CIM Accelerator. The information gets extracted "
+                  "from the Relay graph and saved into the attrs in the extract_config_update.py. "
+                  "The information is then used during lowering to inject the correct function "
+                  "call to the CIM Accelerator.");
   }
 };
 
@@ -1083,6 +1092,7 @@ struct DenseAttrs : public tvm::AttrsNode<DenseAttrs> {
   tvm::String auto_scheduler_rewritten_layout;
   Array<PrimExpr> meta_schedule_original_shape;  // The original shape of the weights
   DataType out_dtype;
+  tvm::String config_update; // The config update information for the CIM Accelerator
 
   TVM_DECLARE_ATTRS(DenseAttrs, "relay.attrs.DenseAttrs") {
     TVM_ATTR_FIELD(units).describe("Number of hidden units of the dense transformation.");
@@ -1091,6 +1101,14 @@ struct DenseAttrs : public tvm::AttrsNode<DenseAttrs> {
     TVM_ATTR_FIELD(out_dtype)
         .set_default(NullValue<DataType>())
         .describe("Output data type, set to explicit type under mixed precision setting");
+
+    TVM_ATTR_FIELD(config_update)
+        .set_default("")
+        .describe("The config update information for the CIM Accelerator. Used to pass the "
+                  "layer information to the CIM Accelerator. The information gets extracted "
+                  "from the Relay graph and saved into the attrs in the extract_config_update.py. "
+                  "The information is then used during lowering to inject the correct function "
+                  "call to the CIM Accelerator.");
   }
 };
 
@@ -1120,6 +1138,7 @@ struct BatchMatmulAttrs : public tvm::AttrsNode<BatchMatmulAttrs> {
   bool transpose_b;
   tvm::String auto_scheduler_rewritten_layout;   // The layout after auto-scheduler's layout rewrite
   Array<PrimExpr> meta_schedule_original_shape;  // The original shape of the weights
+  tvm::String config_update; // The config update information for the CIM Accelerator
 
   TVM_DECLARE_ATTRS(BatchMatmulAttrs, "relay.attrs.BatchMatmulAttrs") {
     // use 0 bits to indicate none.
@@ -1134,6 +1153,14 @@ struct BatchMatmulAttrs : public tvm::AttrsNode<BatchMatmulAttrs> {
     TVM_ATTR_FIELD(transpose_b)
         .set_default(false)
         .describe("Whether the second input tensor is in transposed format.");
+
+    TVM_ATTR_FIELD(config_update)
+        .set_default("")
+        .describe("The config update information for the CIM Accelerator. Used to pass the "
+                  "layer information to the CIM Accelerator. The information gets extracted "
+                  "from the Relay graph and saved into the attrs in the extract_config_update.py. "
+                  "The information is then used during lowering to inject the correct function "
+                  "call to the CIM Accelerator.");
   }
 };
 

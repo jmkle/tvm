@@ -122,7 +122,7 @@ class FlattenAtrousConvSubgraphMutator {
         return Conv2D(data, weight, strides, padding, dilation, conv2d_attrs->groups,
                       conv2d_attrs->channels, conv2d_attrs->kernel_size, conv2d_attrs->data_layout,
                       conv2d_attrs->kernel_layout, conv2d_attrs->out_layout,
-                      conv2d_attrs->out_dtype);
+                      conv2d_attrs->out_dtype, conv2d_attrs->config_update);
       }
 
       if (conv2d_node_->op == Op::Get("qnn.conv2d")) {
@@ -134,7 +134,7 @@ class FlattenAtrousConvSubgraphMutator {
                                   kernel_scale, strides, padding, dilation, conv2d_attrs->groups,
                                   conv2d_attrs->channels, conv2d_attrs->kernel_size,
                                   conv2d_attrs->data_layout, conv2d_attrs->kernel_layout,
-                                  conv2d_attrs->out_layout, conv2d_attrs->out_dtype);
+                                  conv2d_attrs->out_layout, conv2d_attrs->out_dtype, conv2d_attrs->config_update);
       }
 
       DLOG(INFO) << "Ran into an unhandled convolution, skipping " << expr << std::endl;

@@ -827,14 +827,16 @@ static inline Expr Full(Expr fill_value, Array<IndexExpr> shape, DataType dtype)
 static inline Expr Conv2D(Expr data, Expr weight, Array<IndexExpr> strides,
                           Array<IndexExpr> padding, Array<IndexExpr> dilation, int groups,
                           IndexExpr channels, Array<IndexExpr> kernel_size, std::string data_layout,
-                          std::string kernel_layout, std::string out_layout, DataType out_dtype) {
+                          std::string kernel_layout, std::string out_layout, DataType out_dtype,
+                          String config_update) {
   return MakeConv<Conv2DAttrs>(data, weight, strides, padding, dilation, groups, channels,
                                kernel_size, data_layout, kernel_layout, out_layout, out_dtype,
-                               "nn.conv2d");
+                               config_update, "nn.conv2d");
 }
 
-static inline Expr Dense(Expr data, Expr weight, IndexExpr units, DataType out_dtype) {
-  return MakeDense(data, weight, units, out_dtype);
+static inline Expr Dense(Expr data, Expr weight, IndexExpr units, DataType out_dtype,
+                         String config_update) {
+  return MakeDense(data, weight, units, out_dtype, config_update);
 }
 
 static inline Expr Sum(Expr data, Array<Integer> axis, bool keepdims, bool exclude) {

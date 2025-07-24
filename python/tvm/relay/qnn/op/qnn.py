@@ -113,7 +113,8 @@ def requantize_config(**kwargs):
         The requantization configuration
     """
     node_args = {
-        k: v() if k not in kwargs else kwargs[k] for k, v in RequantizeConfig._node_defaults.items()
+        k: v() if k not in kwargs else kwargs[k]
+        for k, v in RequantizeConfig._node_defaults.items()
     }
     return tvm.ir.make_node("relay.qnn.op.RequantizeConfig", **node_args)
 
@@ -365,9 +366,8 @@ def concatenate(data, input_scales, input_zero_points, output_scale, output_zero
     input_scales = list(input_scales)
     input_zero_points = list(input_zero_points)
 
-    return _make.concatenate(
-        data, Tuple(input_scales), Tuple(input_zero_points), output_scale, output_zero_point, axis
-    )
+    return _make.concatenate(data, Tuple(input_scales), Tuple(input_zero_points), output_scale,
+                             output_zero_point, axis)
 
 
 def conv2d(
@@ -387,6 +387,7 @@ def conv2d(
     kernel_layout="OIHW",
     out_layout="",
     out_dtype="int32",
+    config_update="",
 ):
     r"""Quantized 2D convolution.
 
@@ -479,27 +480,28 @@ def conv2d(
         kernel_layout,
         out_layout,
         out_dtype,
+        config_update,
     )
 
 
 def conv2d_transpose(
-    data,
-    weight,
-    input_zero_point,
-    kernel_zero_point,
-    input_scale,
-    kernel_scale,
-    strides=(1, 1),
-    padding=(0, 0),
-    dilation=(1, 1),
-    groups=1,
-    channels=None,
-    kernel_size=None,
-    data_layout="NCHW",
-    kernel_layout="IOHW",
-    out_layout="",
-    output_padding=(0, 0),
-    out_dtype="int32",
+        data,
+        weight,
+        input_zero_point,
+        kernel_zero_point,
+        input_scale,
+        kernel_scale,
+        strides=(1, 1),
+        padding=(0, 0),
+        dilation=(1, 1),
+        groups=1,
+        channels=None,
+        kernel_size=None,
+        data_layout="NCHW",
+        kernel_layout="IOHW",
+        out_layout="",
+        output_padding=(0, 0),
+        out_dtype="int32",
 ):
     """This operator deconvolves quantized data with quantized kernel. The scale of
     the output quantized tensor is the product of the kernel_scale and
@@ -671,6 +673,7 @@ def dense(
     kernel_scale,
     units,
     out_dtype="int32",
+    config_update="",
 ):
     """Qnn Dense operator.
     Applies a quantized linear transformation
@@ -719,6 +722,7 @@ def dense(
         kernel_scale,
         units,
         out_dtype,
+        config_update,
     )
 
 
@@ -1186,7 +1190,16 @@ def subtract(
     )
 
 
-def batch_matmul(x, y, x_zero_point, y_zero_point, x_scale, y_scale, out_dtype="int32"):
+def batch_matmul(
+    x,
+    y,
+    x_zero_point,
+    y_zero_point,
+    x_scale,
+    y_scale,
+    out_dtype="int32",
+    config_update="",
+):
     r"""
     Computes batch matrix multiplication of `x` and `y` when `x` and `y` are data
     in batch.
@@ -1221,7 +1234,16 @@ def batch_matmul(x, y, x_zero_point, y_zero_point, x_scale, y_scale, out_dtype="
     result: tvm.relay.Expr
         The computed result.
     """
-    return _make.batch_matmul(x, y, x_zero_point, y_zero_point, x_scale, y_scale, out_dtype)
+    return _make.batch_matmul(
+        x,
+        y,
+        x_zero_point,
+        y_zero_point,
+        x_scale,
+        y_scale,
+        out_dtype,
+        config_update,
+    )
 
 
 def leaky_relu(x, alpha, input_scale, input_zero_point, output_scale, output_zero_point):
@@ -1246,9 +1268,8 @@ def leaky_relu(x, alpha, input_scale, input_zero_point, output_scale, output_zer
     result : relay.Expr
         The computed result.
     """
-    return _make.leaky_relu(
-        x, alpha, input_scale, input_zero_point, output_scale, output_zero_point
-    )
+    return _make.leaky_relu(x, alpha, input_scale, input_zero_point, output_scale,
+                            output_zero_point)
 
 
 def softmax(x, scale, zero_point, output_scale, output_zero_point, axis=-1):
@@ -1270,7 +1291,6 @@ def avg_pool2d(
     layout="NHWC",
     out_layout="",
 ):
-
     """Quantized avg_pool2d
 
     Parameters

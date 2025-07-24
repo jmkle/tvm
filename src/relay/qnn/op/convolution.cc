@@ -223,7 +223,7 @@ Expr Conv2DFallBack(const Expr& data, const Expr& weight, const Expr& input_zero
 
   return Conv2D(shifted_data, shifted_kernel, param->strides, param->padding, param->dilation,
                 param->groups, param->channels, param->kernel_size, param->data_layout,
-                param->kernel_layout, param->out_layout, param->out_dtype);
+                param->kernel_layout, param->out_layout, param->out_dtype, param->config_update);
 }
 
 /*
@@ -439,7 +439,7 @@ Expr Conv2DFirstTerm(const Expr& padded_data, const Expr& weight, const Conv2DAt
   Array<IndexExpr> padding({0, 0, 0, 0});
   return Conv2D(padded_data, weight, param->strides, padding, param->dilation, param->groups,
                 param->channels, param->kernel_size, param->data_layout, param->kernel_layout,
-                param->out_layout, param->out_dtype);
+                param->out_layout, param->out_dtype, param->config_update);
 }
 
 /*
@@ -828,7 +828,7 @@ Expr MakeQnnConv2D(Expr data, Expr weight, Expr input_zero_point, Expr kernel_ze
                    Expr input_scale, Expr kernel_scale, Array<IndexExpr> strides,
                    Array<IndexExpr> padding, Array<IndexExpr> dilation, int groups,
                    IndexExpr channels, Array<IndexExpr> kernel_size, String data_layout,
-                   String kernel_layout, String out_layout, DataType out_dtype) {
+                   String kernel_layout, String out_layout, DataType out_dtype, String config_update) {
   auto attrs = make_object<Conv2DAttrs>();
   attrs->strides = std::move(strides);
   attrs->padding = std::move(padding);
@@ -840,6 +840,7 @@ Expr MakeQnnConv2D(Expr data, Expr weight, Expr input_zero_point, Expr kernel_ze
   attrs->kernel_layout = std::move(kernel_layout);
   attrs->out_layout = std::move(out_layout);
   attrs->out_dtype = std::move(out_dtype);
+  attrs->config_update = std::move(config_update);
   static const Op& op = Op::Get("qnn.conv2d");
   return Call(op, {data, weight, input_zero_point, kernel_zero_point, input_scale, kernel_scale},
               Attrs(attrs), {});

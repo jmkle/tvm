@@ -56,6 +56,28 @@ inline Expr MakeConv(Expr data, Expr weight, Array<IndexExpr> strides, Array<Ind
 }
 
 template <typename T>
+inline Expr MakeConv(Expr data, Expr weight, Array<IndexExpr> strides, Array<IndexExpr> padding,
+                     Array<IndexExpr> dilation, int groups, IndexExpr channels,
+                     Array<IndexExpr> kernel_size, std::string data_layout,
+                     std::string kernel_layout, std::string out_layout, DataType out_dtype,
+                     String config_update, std::string op_name) {
+  auto attrs = make_object<T>();
+  attrs->strides = std::move(strides);
+  attrs->padding = std::move(padding);
+  attrs->dilation = std::move(dilation);
+  attrs->groups = groups;
+  attrs->channels = std::move(channels);
+  attrs->kernel_size = std::move(kernel_size);
+  attrs->data_layout = std::move(data_layout);
+  attrs->kernel_layout = std::move(kernel_layout);
+  attrs->out_layout = std::move(out_layout);
+  attrs->out_dtype = std::move(out_dtype);
+  attrs->config_update = std::move(config_update);
+  const Op& op = Op::Get(op_name);
+  return Call(op, {data, weight}, Attrs(attrs), {});
+}
+
+template <typename T>
 inline Expr MakeConvWinograd(Expr data, Expr weight, int tile_size, Array<IndexExpr> strides,
                              Array<IndexExpr> padding, Array<IndexExpr> dilation, int groups,
                              IndexExpr channels, Array<IndexExpr> kernel_size,
@@ -82,7 +104,7 @@ inline Expr MakeConvGemm(Expr data, Expr weight, Array<IndexExpr> strides, Array
                          Array<IndexExpr> dilation, int groups, IndexExpr channels,
                          Array<IndexExpr> kernel_size, std::string data_layout,
                          std::string kernel_layout, std::string out_layout, DataType out_dtype,
-                         std::string op_name) {
+                         String config_update, std::string op_name) {
   auto attrs = make_object<T>();
   attrs->strides = std::move(strides);
   attrs->padding = std::move(padding);
@@ -94,6 +116,7 @@ inline Expr MakeConvGemm(Expr data, Expr weight, Array<IndexExpr> strides, Array
   attrs->kernel_layout = std::move(kernel_layout);
   attrs->out_layout = std::move(out_layout);
   attrs->out_dtype = std::move(out_dtype);
+  attrs->config_update = std::move(config_update);
   const Op& op = Op::Get(op_name);
   return Call(op, {data, weight}, Attrs(attrs), {});
 }
