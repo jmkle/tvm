@@ -574,7 +574,7 @@ def register_binary_qnn(op_name, op):
 # Use lambdas here to avoid a circular import problem
 # pylint: disable=unnecessary-lambda
 register_binary_qnn("add", lambda *args: relay.qnn.op.add(*args))
-register_binary_qnn("multiply", lambda *args: relay.qnn.op.mul(*args))
+# register_binary_qnn("multiply", lambda *args: relay.qnn.op.mul(*args))
 register_binary_qnn("subtract", lambda *args: relay.qnn.op.subtract(*args))
 
 
